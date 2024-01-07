@@ -23,3 +23,5 @@ Compile:
 ```shell
 platformio test -e native
 ```
+
+Link to kata: https://agilekatas.co.uk/katas/BerlinClock-Kata
