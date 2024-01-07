@@ -32,7 +32,8 @@ void loop()
 
 #else
 
-TEST(foo, ff) {
+TEST(single_minutes, convertUnixTimestampToBerlinClockSingleMinutes) {
+
   EXPECT_EQ(true, true);
 }
 
