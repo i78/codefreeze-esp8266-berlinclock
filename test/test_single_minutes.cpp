@@ -32,8 +32,19 @@ void loop()
 
 #else
 
+uint32_t convertTimestampToMinuteBits(uint32_t timestamp) {
+  return 0;
+}
+
 TEST(single_minutes, convertUnixTimestampToBerlinClockSingleMinutes) {
-  EXPECT_EQ(true, true);
+  // given
+  uint32_t midnight = 1704578400;
+
+  // when
+  uint32_t minutes_actual = convertTimestampToMinuteBits(midnight);
+
+  // then
+  EXPECT_EQ(minutes_actual, 0);
 }
 
 
