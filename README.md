@@ -9,7 +9,7 @@ platformio init --board d1_mini
 
 Compile:
 ```shell
-platformio -e d1_mini run
+platformio run -e d1_mini
 ```
 
 Upload to ESP:
