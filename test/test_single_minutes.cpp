@@ -33,7 +33,6 @@ void loop()
 #else
 
 TEST(single_minutes, convertUnixTimestampToBerlinClockSingleMinutes) {
-
   EXPECT_EQ(true, true);
 }
 
