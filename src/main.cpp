@@ -31,6 +31,7 @@ void setup()
     pinMode(GPIO_MINUTE_BIT_1, OUTPUT);
     pinMode(GPIO_MINUTE_BIT_2, OUTPUT);
     pinMode(GPIO_MINUTE_BIT_3, OUTPUT);
+    pinMode(D0, OUTPUT);
 
     // const long utcOffsetInSeconds = 3600 * 2;
 
@@ -56,32 +57,22 @@ uint32_t retrieve_minutes()
 void loop()
 {
     timeClient.update();
-    const int32_t minutes = retrieve_minutes();
-    const int32_t timestampMask = convertTimestampToMinuteBits(minutes * 60);
+    const uint32_t minutes = retrieve_minutes();
+    const uint32_t timestampMinutesMask = convertTimestampToMinuteBits(minutes * 60);
 
-    Serial.print(F("Loop "));
-    Serial.print(F("wifiStatus="));
-    Serial.print((WiFi.status()));
+    const uint32_t timestampMask = getTimestampMask(minutes * 60);
+    
 
-    Serial.print(F("localIp="));
-    Serial.print((WiFi.localIP()));
-
-    Serial.print(F("isTImeSet="));
-    Serial.print((timeClient.isTimeSet()));
-    Serial.print(F(" minutes="));
-    Serial.print((minutes));
-    Serial.print(F(" timestampMask="));
-    Serial.print((timestampMask));
-    Serial.print(F("\n"));
-
+    if (TEST_VARIABLE == 0)
+    {
+      digitalWrite(D0, HIGH);
+    }
+    
     // turn the LED on (HIGH is the voltage level)
-    digitalWrite(GPIO_MINUTE_BIT_0, timestampMask & 0b1000);
-    delay(30);
-    digitalWrite(GPIO_MINUTE_BIT_1, timestampMask & 0b0100);
-    delay(30);
-    digitalWrite(GPIO_MINUTE_BIT_2, timestampMask & 0b0010);
-    delay(30);
-    digitalWrite(GPIO_MINUTE_BIT_3, timestampMask & 0b0001);
+    digitalWrite(GPIO_MINUTE_BIT_0, timestampMinutesMask & 0b1000);
+    digitalWrite(GPIO_MINUTE_BIT_1, timestampMinutesMask & 0b0100);
+    digitalWrite(GPIO_MINUTE_BIT_2, timestampMinutesMask & 0b0010);
+    digitalWrite(GPIO_MINUTE_BIT_3, timestampMinutesMask & 0b0001);
 
     // wait for a second
     delay(1000);

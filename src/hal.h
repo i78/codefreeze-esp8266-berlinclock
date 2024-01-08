@@ -1,6 +1,21 @@
 #include "Arduino.h"
 
+// d1_mini_minutes
 #define GPIO_MINUTE_BIT_0 D3
 #define GPIO_MINUTE_BIT_1 D4
 #define GPIO_MINUTE_BIT_2 D5
 #define GPIO_MINUTE_BIT_3 D6
+
+#define GPIO_FIVE_MINUTE_BIT_8 D0
+#define GPIO_FIVE_MINUTE_BIT_9 D1
+#define GPIO_FIVE_MINUTE_BIT_10 D2
+
+// d1_mini_five_minutes
+#define GPIO_FIVE_MINUTE_BIT_0 D0
+#define GPIO_FIVE_MINUTE_BIT_1 D1
+#define GPIO_FIVE_MINUTE_BIT_2 D2
+#define GPIO_FIVE_MINUTE_BIT_3 D3
+#define GPIO_FIVE_MINUTE_BIT_4 D4
+#define GPIO_FIVE_MINUTE_BIT_5 D5
+#define GPIO_FIVE_MINUTE_BIT_6 D6
+#define GPIO_FIVE_MINUTE_BIT_7 D7
