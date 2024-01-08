@@ -9,9 +9,17 @@
 #include <clock_conversion.h>
 #include "hal.h"
 
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 2
-#endif
+// WIFI, NTP
+#include "wifi.h"
+#include <ESP8266WiFi.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+
+const char *ssid = SECRET_SSID;
+const char *password = SECRET_WIFI_PASSWORD;
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
 
 void setup()
 {
@@ -20,11 +28,32 @@ void setup()
     pinMode(GPIO_MINUTE_BIT_1, OUTPUT);
     pinMode(GPIO_MINUTE_BIT_2, OUTPUT);
     pinMode(GPIO_MINUTE_BIT_3, OUTPUT);
+
+    
+    const long utcOffsetInSeconds = 3600 * 2;
+
+    WiFi.begin(ssid, password);
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(500);
+        Serial.print(".");
+    }
+
+    WiFiUDP ntpUDP;
+    NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
+
+    timeClient.begin();
+}
+
+uint32_t retrieve_ntp_time()
+{
+    return timeClient.getEpochTime();    
 }
 
 void loop()
 {
-    const int32_t fakeTimestamp = 1704540720;
+    const int32_t fakeTimestamp = retrieve_ntp_time();
     const int32_t timestampMask = convertTimestampToMinuteBits(fakeTimestamp);
 
     // turn the LED on (HIGH is the voltage level)
@@ -37,14 +66,5 @@ void loop()
     digitalWrite(GPIO_MINUTE_BIT_3, timestampMask & 0b0001);
 
     // wait for a second
-    delay(100);
-
-    // turn the LED off by making the voltage LOW
-    digitalWrite(GPIO_MINUTE_BIT_0, LOW);    
-    digitalWrite(GPIO_MINUTE_BIT_1, LOW);
-    digitalWrite(GPIO_MINUTE_BIT_2, LOW);    
-    digitalWrite(GPIO_MINUTE_BIT_3, LOW);
-
-    // wait for a second
-    delay(100);
+    delay(1000);
 }
