@@ -9,19 +9,35 @@
 
 TEST(single_minutes, convertUnixMidnightToMinuteBits) {
   // given
-  uint32_t midnight = 1704578400;
+  const uint32_t midnight = 1704578400;
 
   // when
-  uint32_t minutes_actual = convertTimestampToMinuteBits(midnight);
+  const uint32_t minutes_actual = convertTimestampToMinuteBits(midnight);
 
   // then
   EXPECT_EQ(minutes_actual, 0);
 }
 
 TEST(single_minutes, convertUnixOneSecondToMidnightToMinuteBits) {
-  uint32_t one_second_to_midnight = 1704578399;
+  const uint32_t one_second_to_midnight = 1704578399;
 
-  uint32_t minutes_actual = convertTimestampToMinuteBits(one_second_to_midnight);
+  const uint32_t minutes_actual = convertTimestampToMinuteBits(one_second_to_midnight);
+
+  EXPECT_EQ(minutes_actual, 0b1111);
+}
+
+TEST(single_minutes, convertUnix32pastFullHourToMinuteBits) {
+  const uint32_t full_hour_plus_32_minutes = 1704540720;
+
+  const uint32_t minutes_actual = convertTimestampToMinuteBits(full_hour_plus_32_minutes);
+
+  EXPECT_EQ(minutes_actual, 0b1100);
+}
+
+TEST(single_minutes, convertUnix34pastFullHourToMinuteBits) {
+  const uint32_t full_hour_plus_32_minutes = 1704540840;
+
+  const uint32_t minutes_actual = convertTimestampToMinuteBits(full_hour_plus_32_minutes);
 
   EXPECT_EQ(minutes_actual, 0b1111);
 }
@@ -45,7 +61,7 @@ void loop()
   // Run tests
   if (RUN_ALL_TESTS())
   ;
-
+0b1111
   // sleep for 1 sec
   delay(1000);
 }
