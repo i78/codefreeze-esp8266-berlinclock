@@ -1,5 +1,11 @@
 # Berlin Clock
 
+## Platform
+[Az-Delivery D1-Mini (ESP8266 based) ](https://www.az-delivery.de/en/products/d1-mini)
+
+### Pinout
+![](docs/assets/d1mini_pinout.png)
+
 ## platformio commands
 
 Init Project:
